@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTasks } from '../context/TaskContext';
-import { MoreHorizontal, Clock, ChevronDown } from 'lucide-react';
+import { MoreHorizontal, Clock } from 'lucide-react';
 
 const columns = [
   { key: 'todo', label: 'To Do', color: '#718096', dot: '#718096' },
@@ -11,7 +11,6 @@ const columns = [
 ];
 
 const priorityColors = { high: '#ef4444', medium: '#f59e0b', low: '#10b981' };
-
 const teamColors = { AS: '#7c3aed', JK: '#0ea5e9', ML: '#10b981', RN: '#f59e0b', PK: '#ec4899', TW: '#06b6d4' };
 
 function TaskCard({ task, col }) {
@@ -20,8 +19,12 @@ function TaskCard({ task, col }) {
   const others = columns.filter(c => c.key !== col);
 
   return (
-    <motion.div layout initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, scale: 0.95 }} transition={{ duration: 0.25 }}
+    <motion.div
+      layout
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, scale: 0.95 }}
+      transition={{ duration: 0.25 }}
       whileHover={{ y: -2, boxShadow: '0 8px 24px rgba(0,0,0,0.3)' }}
       style={{
         background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)',
@@ -42,11 +45,15 @@ function TaskCard({ task, col }) {
             <MoreHorizontal size={15} />
           </button>
           {menu && (
-            <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} style={{
-              position: 'absolute', right: 0, top: '100%', background: '#1a1f2e',
-              border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px',
-              padding: '6px', zIndex: 10, minWidth: '140px',
-            }}>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              style={{
+                position: 'absolute', right: 0, top: '100%', background: '#1a1f2e',
+                border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px',
+                padding: '6px', zIndex: 10, minWidth: '140px',
+              }}
+            >
               {others.map(c => (
                 <button key={c.key} onClick={() => { moveTask(task.id, col, c.key); setMenu(false); }} style={{
                   display: 'block', width: '100%', padding: '6px 10px', background: 'none',
@@ -74,7 +81,11 @@ function TaskCard({ task, col }) {
       {/* Tags */}
       <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap', marginBottom: '12px' }}>
         {task.tags.map(t => (
-          <span key={t} style={{ padding: '2px 7px', borderRadius: '4px', fontSize: '10px', background: 'rgba(124,58,237,0.15)', color: '#a78bfa', border: '1px solid rgba(124,58,237,0.2)' }}>#{t}</span>
+          <span key={t} style={{
+            padding: '2px 7px', borderRadius: '4px', fontSize: '10px',
+            background: 'rgba(124,58,237,0.15)', color: '#a78bfa',
+            border: '1px solid rgba(124,58,237,0.2)',
+          }}>#{t}</span>
         ))}
       </div>
 
@@ -83,7 +94,12 @@ function TaskCard({ task, col }) {
         <div style={{ display: 'flex', alignItems: 'center', gap: '5px', color: '#4a5568', fontSize: '11px' }}>
           <Clock size={11} />{task.due}
         </div>
-        <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: teamColors[task.assignee] || '#7c3aed', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '10px', fontWeight: 700, color: '#fff' }}>
+        <div style={{
+          width: '24px', height: '24px', borderRadius: '50%',
+          background: teamColors[task.assignee] || '#7c3aed',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          fontSize: '10px', fontWeight: 700, color: '#fff',
+        }}>
           {task.assignee}
         </div>
       </div>
@@ -97,7 +113,16 @@ export default function KanbanBoard() {
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.4 }}>
       <h2 style={{ color: '#fff', fontSize: '15px', fontWeight: 700, marginBottom: '16px' }}>Kanban Board</h2>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '16px', overflowX: 'auto' }}>
+
+      {/* Always use minmax columns so the board scrolls horizontally on mobile */}
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(4, minmax(220px, 1fr))',
+        gap: '16px',
+        overflowX: 'auto',
+        WebkitOverflowScrolling: 'touch',
+        paddingBottom: '4px',
+      }}>
         {columns.map(col => (
           <div key={col.key} style={{ minWidth: '220px' }}>
             {/* Column header */}
