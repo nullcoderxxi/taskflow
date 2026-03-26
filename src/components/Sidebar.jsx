@@ -61,19 +61,28 @@ function SidebarContent({ active, setActive, onClose, isMobileOverlay }) {
           <motion.button
             key={label}
             onClick={() => { setActive(label); if (isMobileOverlay && onClose) onClose(); }}
-            whileHover={{ x: 3 }}
+            whileHover={{ x: 5, transition: { type: 'spring', stiffness: 400, damping: 25 } }}
             style={{
               width: '100%', display: 'flex', alignItems: 'center', gap: '10px',
               padding: '9px 10px', borderRadius: '8px', border: 'none', cursor: 'pointer',
               background: active === label ? 'rgba(124,58,237,0.15)' : 'transparent',
               color: active === label ? '#7c3aed' : '#718096',
               fontSize: '13px', fontWeight: active === label ? 700 : 500,
-              marginBottom: '2px', transition: 'all 0.15s', textAlign: 'left',
+              marginBottom: '2px', textAlign: 'left',
             }}
           >
             <Icon size={16} />
             {label}
-            {active === label && <ChevronRight size={14} style={{ marginLeft: 'auto' }} />}
+            {active === label && (
+              <motion.div
+                initial={{ opacity: 0, x: -5 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.2 }}
+                style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center' }}
+              >
+                <ChevronRight size={14} />
+              </motion.div>
+            )}
           </motion.button>
         ))}
 
@@ -86,7 +95,7 @@ function SidebarContent({ active, setActive, onClose, isMobileOverlay }) {
           {projects.map(p => (
             <motion.button
               key={p.id}
-              whileHover={{ x: 3 }}
+              whileHover={{ x: 5, transition: { type: 'spring', stiffness: 400, damping: 25 } }}
               style={{
                 width: '100%', display: 'flex', alignItems: 'center', gap: '8px',
                 padding: '7px 10px', borderRadius: '8px', border: 'none', cursor: 'pointer',
@@ -126,8 +135,17 @@ export default function Sidebar({ open, onClose }) {
   const isOverlayMode = open !== undefined;
 
   if (!isOverlayMode) {
-    // Desktop: render inline sticky sidebar
-    return <SidebarContent active={active} setActive={setActive} isMobileOverlay={false} />;
+    // Desktop: render inline sticky sidebar with mount animation
+    return (
+      <motion.div
+        initial={{ x: -240, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ type: 'spring', stiffness: 200, damping: 25 }}
+        style={{ flexShrink: 0 }}
+      >
+        <SidebarContent active={active} setActive={setActive} isMobileOverlay={false} />
+      </motion.div>
+    );
   }
 
   // Mobile/tablet: render as overlay when open

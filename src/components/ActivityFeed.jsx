@@ -14,11 +14,16 @@ export default function ActivityFeed() {
       <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
         {activity.map((a, i) => (
           <motion.div key={i} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: i * 0.06 }}
+            transition={{ delay: i * 0.07, type: 'spring', stiffness: 200, damping: 25 }}
             style={{ display: 'flex', gap: '10px', paddingBottom: '14px', position: 'relative' }}>
             {/* Timeline line */}
             {i < activity.length - 1 && (
-              <div style={{ position: 'absolute', left: '14px', top: '28px', bottom: 0, width: '1px', background: 'rgba(255,255,255,0.06)' }} />
+              <motion.div
+                initial={{ scaleY: 0 }}
+                animate={{ scaleY: 1 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+                style={{ position: 'absolute', left: '14px', top: '28px', bottom: 0, width: '1px', background: 'rgba(255,255,255,0.06)', transformOrigin: 'top' }}
+              />
             )}
             <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: a.color, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '10px', fontWeight: 700, color: '#fff', flexShrink: 0 }}>
               {a.user}

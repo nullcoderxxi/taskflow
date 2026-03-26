@@ -13,7 +13,7 @@ const columns = [
 const priorityColors = { high: '#ef4444', medium: '#f59e0b', low: '#10b981' };
 const teamColors = { AS: '#7c3aed', JK: '#0ea5e9', ML: '#10b981', RN: '#f59e0b', PK: '#ec4899', TW: '#06b6d4' };
 
-function TaskCard({ task, col }) {
+function TaskCard({ task, col, taskIndex = 0 }) {
   const { moveTask, deleteTask } = useTasks();
   const [menu, setMenu] = useState(false);
   const others = columns.filter(c => c.key !== col);
@@ -21,10 +21,11 @@ function TaskCard({ task, col }) {
   return (
     <motion.div
       layout
+      layoutId={task.id}
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, scale: 0.95 }}
-      transition={{ duration: 0.25 }}
+      exit={{ opacity: 0, scale: 0.8, y: -10 }}
+      transition={{ delay: taskIndex * 0.05, type: 'spring', stiffness: 250, damping: 25 }}
       whileHover={{ y: -2, boxShadow: '0 8px 24px rgba(0,0,0,0.3)' }}
       style={{
         background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)',
@@ -123,10 +124,14 @@ export default function KanbanBoard() {
         WebkitOverflowScrolling: 'touch',
         paddingBottom: '4px',
       }}>
-        {columns.map(col => (
+        {columns.map((col, colIndex) => (
           <div key={col.key} style={{ minWidth: '220px' }}>
             {/* Column header */}
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
+            <motion.div
+              initial={{ opacity: 0, y: -15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: colIndex * 0.1 }}
+              style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '7px' }}>
                 <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: col.dot }} />
                 <span style={{ color: '#a0aec0', fontSize: '12px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.5px' }}>{col.label}</span>
@@ -134,16 +139,16 @@ export default function KanbanBoard() {
                   {tasks[col.key].length}
                 </span>
               </div>
-            </div>
+            </motion.div>
 
             {/* Cards */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', minHeight: '200px' }}>
+            <motion.div layout style={{ display: 'flex', flexDirection: 'column', gap: '10px', minHeight: '200px' }}>
               <AnimatePresence>
-                {tasks[col.key].map(task => (
-                  <TaskCard key={task.id} task={task} col={col.key} />
+                {tasks[col.key].map((task, taskIndex) => (
+                  <TaskCard key={task.id} task={task} col={col.key} taskIndex={taskIndex} />
                 ))}
               </AnimatePresence>
-            </div>
+            </motion.div>
           </div>
         ))}
       </div>

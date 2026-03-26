@@ -13,7 +13,10 @@ export default function ProjectsList() {
       <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
         {projects.map((p, i) => (
           <motion.div key={p.id} initial={{ opacity: 0, x: -15 }} animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: i * 0.06 }} whileHover={{ x: 3 }} style={{ cursor: 'pointer' }}>
+            transition={{ delay: i * 0.06 }}
+            whileHover={{ x: 5, background: 'rgba(124,58,237,0.06)', transition: { type: 'spring', stiffness: 300 } }}
+            whileTap={{ scale: 0.98 }}
+            style={{ cursor: 'pointer', borderRadius: '8px', padding: '4px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '7px' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <div style={{ width: '10px', height: '10px', borderRadius: '3px', background: p.color }} />
@@ -25,7 +28,7 @@ export default function ProjectsList() {
             {/* Progress bar */}
             <div style={{ height: '5px', background: 'rgba(255,255,255,0.07)', borderRadius: '3px', overflow: 'hidden', marginBottom: '6px' }}>
               <motion.div initial={{ width: 0 }} animate={{ width: `${p.progress}%` }}
-                transition={{ duration: 0.8, delay: i * 0.1 }}
+                transition={{ duration: 1.0, delay: i * 0.15, type: 'spring', stiffness: 60, damping: 15 }}
                 style={{ height: '100%', background: `linear-gradient(90deg, ${p.color}, ${p.color}99)`, borderRadius: '3px' }} />
             </div>
 

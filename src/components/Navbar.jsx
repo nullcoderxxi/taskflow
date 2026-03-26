@@ -6,14 +6,18 @@ export default function Navbar({ onToggleSidebar }) {
   const { isMobile } = useWindowSize();
 
   return (
-    <header style={{
-      height: '60px',
-      borderBottom: '1px solid rgba(255,255,255,0.06)',
-      display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-      padding: isMobile ? '0 16px' : '0 24px',
-      background: 'rgba(15,17,23,0.95)', backdropFilter: 'blur(12px)',
-      position: 'sticky', top: 0, zIndex: 50,
-    }}>
+    <motion.header
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+      style={{
+        height: '60px',
+        borderBottom: '1px solid rgba(255,255,255,0.06)',
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        padding: isMobile ? '0 16px' : '0 24px',
+        background: 'rgba(15,17,23,0.95)', backdropFilter: 'blur(12px)',
+        position: 'sticky', top: 0, zIndex: 50,
+      }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
         {/* Hamburger — mobile/tablet only */}
         {isMobile && (
@@ -54,8 +58,8 @@ export default function Navbar({ onToggleSidebar }) {
         )}
 
         <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.97 }}
+          whileHover={{ scale: 1.05, boxShadow: '0 0 20px rgba(124,58,237,0.4)' }}
+          whileTap={{ scale: 0.95 }}
           style={{
             display: 'flex', alignItems: 'center', gap: '6px',
             padding: isMobile ? '7px 10px' : '8px 14px',
@@ -77,6 +81,6 @@ export default function Navbar({ onToggleSidebar }) {
           }} />
         </div>
       </div>
-    </header>
+    </motion.header>
   );
 }

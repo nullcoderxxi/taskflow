@@ -17,14 +17,17 @@ export default function TeamPanel() {
       <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
         {team.map((member, i) => (
           <motion.div key={member.id} initial={{ opacity: 0, x: 15 }} animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: i * 0.05 }}
-            style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '8px', borderRadius: '8px', cursor: 'pointer', transition: 'background 0.15s' }}
-            whileHover={{ background: 'rgba(255,255,255,0.04)' }}>
+            transition={{ delay: i * 0.05, type: 'spring', stiffness: 200, damping: 25 }}
+            style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '8px', borderRadius: '8px', cursor: 'pointer' }}
+            whileHover={{ x: 5, background: 'rgba(255,255,255,0.04)', transition: { type: 'spring', stiffness: 300, damping: 25 } }}>
             <div style={{ position: 'relative', flexShrink: 0 }}>
               <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: member.color, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '11px', fontWeight: 700, color: '#fff' }}>
                 {member.initials}
               </div>
-              <div style={{ position: 'absolute', bottom: 0, right: 0, width: '9px', height: '9px', borderRadius: '50%', background: statusColor[member.status], border: '2px solid #0f1117' }} />
+              <div
+                className={member.status === 'online' ? 'pulse-status' : undefined}
+                style={{ position: 'absolute', bottom: 0, right: 0, width: '9px', height: '9px', borderRadius: '50%', background: statusColor[member.status], border: '2px solid #0f1117' }}
+              />
             </div>
             <div style={{ flex: 1, overflow: 'hidden' }}>
               <p style={{ color: '#e2e8f0', fontSize: '12px', fontWeight: 600, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{member.name}</p>
