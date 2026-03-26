@@ -1,16 +1,51 @@
-# React + Vite
+# TaskFlow ⚡
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> Built by **Amandeep Singh** | Full Stack MERN Developer
 
-Currently, two official plugins are available:
+A professional team & task management dashboard with Kanban board, project tracking, team collaboration, and activity feed.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+**🔗 Live Demo:** [coming soon](#)
+**📁 GitHub:** [github.com/nullcoderxxi/taskflow](https://github.com/nullcoderxxi/taskflow)
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech Stack
 
-## Expanding the ESLint configuration
+- **React.js** (Vite)
+- **Framer Motion** — spring physics, layout animations, count-up
+- **Context API** — global task state management
+- **Tailwind CSS** — utility styling
+- **Lucide React** — icons
+- **Node.js / Express.js** *(backend-ready)*
+- **MongoDB / JWT Auth** *(backend-ready)*
+- **AWS** *(deployment-ready)*
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Features
+
+- Kanban board with 4 columns (Todo / In Progress / Review / Done)
+- Move & delete tasks with animated layout transitions
+- Priority badges (high / medium / low) with colour coding
+- Project progress tracker with animated bars
+- Team panel with online/away/offline status
+- Activity feed with timeline animations
+- Stats row with count-up animations on load
+- Mobile sidebar drawer with overlay
+- Fully responsive (mobile / tablet / desktop)
+
+## Getting Started
+
+```bash
+npm install
+npm run dev
+```
+
+## Build
+
+```bash
+npm run build
+```
+
+---
+
+Built with ❤️ by **Amandeep Singh**
+[GitHub](https://github.com/nullcoderxxi) · [LinkedIn](https://www.linkedin.com/in/aman1999/)
